@@ -17,18 +17,23 @@ connectDB();
 const whitelist = [process.env.FRONTEND_URL]
 // const whitelist = ['http://localhost:8080']
 
-const corsOptions = {
-  origin: function(origin, callback){
-    console.log('ORIGIN', origin)
-    console.log('ORIGIN', whitelist)
-    if(whitelist.includes(origin)){
-      //Pueden 
-      callback(null, true)
-    }else{
-      //no pueden
-      callback(new Error("Error de Cors, CORS ERROR"))
-    }
-  }
+// const corsOptions = {
+//   origin: function(origin, callback){
+//     console.log('ORIGIN', origin)
+//     console.log('ORIGIN', whitelist)
+//     if(whitelist.includes(origin)){
+//       //Pueden 
+//       callback(null, true)
+//     }else{
+//       //no pueden
+//       callback(new Error("Error de Cors, CORS ERROR"))
+//     }
+//   }
+// }
+
+var corsOptions = {
+  origin: process.env.FRONTEND_URL,
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
 app.use(cors(corsOptions))
