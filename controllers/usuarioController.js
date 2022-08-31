@@ -1,7 +1,7 @@
 import Usuario from "../models/Usuario.js"
 import generarId from '../helpers/generarId.js'
 import generarJWT from '../helpers/generarJWT.js'
-import { emailRegistro, emailOlvidePassword } from '../helpers/email.js'
+import { emailRegistro, emailOlvidePassword, emailContacto } from '../helpers/email.js'
 
 const register = async (req, res) => {
   //evitar registros duplicados
@@ -139,4 +139,24 @@ const perfil = async (req, res) => {
   res.json(usuario)
 }
 
-export{ register, autenticar, confirmar, olvidePassword, comprobarToken, nuevoPassword, perfil }
+
+const envioCorreo = async (req, res) => {
+  const { email, nombre, message } = req.body;
+  
+  try{
+    //Enviar el email de contacto
+    emailContacto({
+      email: email,
+      nombre: nombre,
+      message: message
+    })
+
+    res.json({ msg: "Thanks for the message, we will be in touch soon" })
+  }catch(error){
+    console.log(error)
+  }
+}
+
+
+
+export{ register, autenticar, confirmar, olvidePassword, comprobarToken, nuevoPassword, perfil, envioCorreo }
